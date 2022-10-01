@@ -11,11 +11,22 @@ import org.springframework.web.bind.annotation.*;
 public class RecordController {
     @Autowired
     RecordService recordService;
+
+    /**
+     * To get all the available Approaches to calculate Prime Numbers
+     * @return list of approaches
+     */
     @GetMapping("/approaches")
     public Approach[] getAllApproaches(){
         return recordService.getAllApproaches();
     }
 
+    /**
+     * To calculate Prime number based on lowerBound, upperBound and approachid provided by the user
+     * upperBound value should be always greater than lowerBound otherwise it will throw exception
+     * @param calculateRequest Request Body consisting lowerBound , upeerBound and approchId
+     * @return List of prime Numbers
+     */
     @PostMapping("/calculation")
     public Integer[] calculatePrime(@RequestBody CalculateRequest calculateRequest){
 

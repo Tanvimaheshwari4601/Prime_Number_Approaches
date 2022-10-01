@@ -19,13 +19,27 @@ public class RecordService {
     @Autowired
     private RecordRepository recordRepository;
 
-     Approach[] approaches = { new Approach(1 , "Basic Approach"), new Approach(2 ,"Optimized Basic Approach"),
-    new Approach(3, "Using Recursion"), new Approach(4, "Mod Method"), new Approach(5, "Sieve Of Eratosthenes")};
 
+     // array of available approaches
+    Approach[] approaches = { new Approach(1 , "Basic Approach"), new Approach(2 ,"Optimized Basic Approach"),
+    new Approach(3, "Using Recursion"), new Approach(4, "6k ± 1 Rule"), new Approach(5, "Sieve Of Eratosthenes")};
+
+    /**
+     * to get all the available approaches for calculating Prime Number
+     * @return list of approaches
+     */
     public Approach[] getAllApproaches(){
         return approaches;
     }
 
+    /**
+     * to calculate prime numbers according to provided approachId
+     * to save the execution record in database
+     * @param lowerBound Starting range
+     * @param upperBound Ending range
+     * @param approachId Id of selected approach
+     * @return Array of Prime Numbers
+     */
     public Integer[] calculatePrime(int lowerBound, int upperBound, int approachId){
         PrimeNumber primeNumber = new PrimeNumber();
         primeNumber.setLowerBound(lowerBound);
@@ -47,7 +61,14 @@ public class RecordService {
         return approach(lowerBound, upperBound, approachId);
     }
 
-
+    /**
+     * to handle execution of prime number based on different Id's
+     * on selecting unavailable approach it throws exception
+     * @param start starting Range
+     * @param end ending Range
+     * @param approachId Selected approach id
+     * @return Array of Prime Number
+     */
     public  Integer[] approach(int start , int end, int approachId){
 
         switch(approachId){
@@ -60,6 +81,15 @@ public class RecordService {
         }
 
     }
+
+    /**
+     * basic approach to calculate prime number
+     * to check the divisibility of a number from 2 to n(number)
+     * time complexity O(n) for checking every individual number
+     * @param start starting range
+     * @param end ending range
+     * @return Array of Prime number
+     */
     public  Integer[] basicApproach(int start , int end){
         List<Integer> result = new ArrayList<>();
         for(int i = start; i <= end ; i++) {
@@ -79,6 +109,16 @@ public class RecordService {
 
         return result.toArray(new Integer[result.size()]);
     }
+
+    /**
+     * optimized method of basic approach
+     * to check the divisibility pf a number from 2 to sqrt(n)
+     * a larger factor of n must be a multiple of a smaller factor that has been already checked
+     * time complexity √n for checking every individual number
+     * @param start starting range
+     * @param end ending range
+     * @return array of Prime numbers
+     */
     public  Integer[] optimizedBasicApproach(int start , int end){
         List<Integer> result = new ArrayList<>();
         for(int i = start; i <= end ; i++) {
@@ -98,6 +138,15 @@ public class RecordService {
 
         return result.toArray(new Integer[result.size()]);
     }
+
+    /**
+     * to give recursive method for calculating prime number between given range
+     * for every number it will call method isPrimeUsingRecursion
+     * time complexity √n for checking every individual number
+     * @param start
+     * @param end
+     * @return Array of Prime Numbers
+     */
     public  Integer[] usingRecursion(int start, int end){
         List<Integer> result = new ArrayList<>();
         for(int i = start; i <= end ; i++){
@@ -107,6 +156,13 @@ public class RecordService {
         }
         return result.toArray(new Integer[result.size()]);
     }
+
+    /**
+     * to check whether the number is Prime or not
+     * @param n number to be checked
+     * @param i divisor value
+     * @return checks for next divisor
+     */
     public  boolean isPrimeUsingRecursion(int n, int i){
         if(n == i){
             return true;
@@ -119,6 +175,15 @@ public class RecordService {
         }
 
     }
+
+    /**
+     * to check the prime number using  6k ± 1 Rule
+     * all the Prime numbers greater than 3 can be expressed in the form of 6k ± 1 where k>0
+     * time complexity √n for checking every individual number
+     * @param start Starting Range
+     * @param end Ending Range
+     * @return array of Prime number
+     */
     public  Integer[] modMethod(int start, int end){
         List<Integer> result = new ArrayList<>();
         for(int i = start ; i <= end ; i++){
@@ -141,6 +206,15 @@ public class RecordService {
         }
         return result.toArray(new Integer[result.size()]);
     }
+
+    /**
+     * to check the prime number in given range by Sieve of Eratosthenes
+     * mark all the numbers multiples of prime number (for ex. 2, 3 , 5 and so on) and set to composite
+     * time complexity O(n*log(log(n))) for checking every individual number
+     * @param start starting range
+     * @param end ending range
+     * @return array of prime numbers
+     */
     public  Integer[] sieveOfEratosthenes(int start, int end){
         List<Integer> result = new ArrayList<>();
         boolean prime[] = new boolean[end+1];

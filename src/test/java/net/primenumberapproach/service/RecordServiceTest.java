@@ -133,7 +133,7 @@ class RecordServiceTest {
     }
 
     @Test
-    void modMethod() {
+    void modMethodTest() {
         Integer[] result = recordService.modMethod(2,10);
         assertThat(result.length).isEqualTo(4);
         assertThat(result[result.length-1]).isEqualTo(7);
